@@ -4,6 +4,7 @@ var rename=require('gulp-rename');
 var browserify=require('browserify');
  var vinyl=require('vinyl-source-stream');
 var babel =require('babelify');
+var watchify=require('watchify');
 
 
 
@@ -18,7 +19,7 @@ gulp.task('assets',function(){
 
 gulp.task('css',function(){
 
-	gulp.src('./public/index.styl')
+	gulp.src('./assets/index.styl')
 	.pipe(stylus({
 		'include css':true
 	}))
@@ -27,18 +28,39 @@ gulp.task('css',function(){
 });
 
 gulp.task('js',function(){
-	browserify('./sources/index.js')
-	.transform(babel)
-	.bundle()
-	.pipe(vinyl('index.js'))
-	.pipe(rename('app.js'))
-	.pipe(gulp.dest('public'))
+	
+	
 	});
 
+function compile(watch)
+{
+	var bundle=watchify(browserify('./sources/index.js'));
+	function rebundle()
+	{
+		bundle
+		.transform(babel)
+		.bundle()
+		.pipe(vinyl('index.js'))
+		.pipe(rename('app.js'))
+		.pipe(gulp.dest('public'))
+	}
+	if(watch)
+	{
+		bundle.on('update',function(){
+			console.log('-->Construyendo....');
+			rebundle();
+	})
+	}
+	rebundle();
+}
+gulp.task('build', function(){
+	return compile();
+	});
+gulp.task('watch',function(){
+	return compile(true);
+	});
 
-
-
-gulp.task('default',['css','assets','js']);
+gulp.task('default',['css','assets','build']);
 
 
 

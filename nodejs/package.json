@@ -4,7 +4,8 @@
   "description": "clase de nodejs",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build":"gulp",
+    "start":"gulp & node server.js"
   },
   "author": "UStarroz",
   "license": "MIT",
