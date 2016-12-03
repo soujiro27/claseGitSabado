@@ -16,6 +16,9 @@ app.get('/login',function(req, res){
 	res.render('index');
 });
 
+app.get('/timeline',function(req, res){
+	res.render('index');
+});
 
 
 

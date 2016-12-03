@@ -1,8 +1,7 @@
 var yo=require('yo-yo');
-function pansul()
+module.exports=function pansul()
 {
-	
-var  el= yo`<div class="container">
+return yo`<div class="container">
 	<div class="row">
 		<div class="col s3 m3 l4">
 			<img src="GatoLogin.jpg" alt="gato" />
